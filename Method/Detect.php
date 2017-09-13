@@ -4,7 +4,12 @@ use GDO\Core\Method;
 use GDO\CountryCoordinates\GDO_CountryCoordinates;
 use GDO\Util\Common;
 use GDO\Country\GDO_Country;
-
+/**
+ * Detect a country by lat/lng geocoordinates.
+ * Stolen from https://stackoverflow.com/a/2922778
+ * Stolen from http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+ * @author gizmore
+ */
 final class Detect extends Method
 {
     public function execute()
