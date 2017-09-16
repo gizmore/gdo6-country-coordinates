@@ -12,6 +12,11 @@ use GDO\Country\GDO_Country;
  */
 final class Detect extends Method
 {
+    public function getPermission()
+    {
+        return 'staff';
+    }
+    
     public function execute()
     {
         if (!($country = $this->detect(Common::getGetFloat('lat'), Common::getGetFloat('lng'))))
