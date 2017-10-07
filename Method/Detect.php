@@ -26,7 +26,7 @@ final class Detect extends Method
         die(json_encode($country->toJSON()));
     }
         
-    public function detect(float $lat=null, float $lng=null)
+    public function detect($lat=null, $lng=null)
     {
         $probable = GDO_CountryCoordinates::probableCountries($lat, $lng);
         foreach ($probable as $country)
@@ -40,7 +40,7 @@ final class Detect extends Method
         return GDO_Country::unknownCountry();
     }
     
-    private function insideGeometry(float $lat=null, float $lng=null, $geometry)
+    private function insideGeometry($lat=null, $lng=null, $geometry)
     {
         switch ($geometry->type)
         {
@@ -71,7 +71,7 @@ final class Detect extends Method
         return false;
     }
     
-    private function insidePolygon(float $lat=null, float $lng=null, $coords)
+    private function insidePolygon($lat=null, $lng=null, $coords)
     {
        $result = false;
        $nvert = count($coords);

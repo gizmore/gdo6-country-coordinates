@@ -3,7 +3,7 @@ namespace GDO\CountryCoordinates;
 use GDO\DB\Cache;
 use GDO\Core\GDO;
 use GDO\Country\GDT_Country;
-use GDO\Type\GDT_Decimal;
+use GDO\DB\GDT_Decimal;
 use GDO\Country\GDO_Country;
 
 final class GDO_CountryCoordinates extends GDO
@@ -39,12 +39,12 @@ final class GDO_CountryCoordinates extends GDO
             ($this->getMaxLng() >= $lng);
     }
     
-    public static function getOrCreateById(string $id)
+    public static function getOrCreateById($id)
     {
         $cache = self::table()->all();
         if (!isset($cache[$id]))
         {
-            Cache::unset('gdo_country_coords');
+            Cache::remove('gdo_country_coords');
             return self::blank(array(
                 'cc_country' => $id,
             ))->insert();
