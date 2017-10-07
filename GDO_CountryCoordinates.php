@@ -1,7 +1,7 @@
 <?php
 namespace GDO\CountryCoordinates;
 use GDO\DB\Cache;
-use GDO\DB\GDO;
+use GDO\Core\GDO;
 use GDO\Country\GDT_Country;
 use GDO\Type\GDT_Decimal;
 use GDO\Country\GDO_Country;
