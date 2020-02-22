@@ -1,16 +1,16 @@
 <?php
 namespace GDO\CountryCoordinates\Method;
-use GDO\Core\Method;
 use GDO\CountryCoordinates\GDO_CountryCoordinates;
 use GDO\Util\Common;
 use GDO\Country\GDO_Country;
+use GDO\Core\MethodAjax;
 /**
  * Detect a country by lat/lng geocoordinates.
  * Stolen from https://stackoverflow.com/a/2922778
  * Stolen from http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
  * @author gizmore
  */
-final class Detect extends Method
+final class Detect extends MethodAjax
 {
 	public function getPermission()
 	{
