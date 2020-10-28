@@ -1,11 +1,20 @@
 <?php
 namespace GDO\CountryCoordinates;
+
 use GDO\DB\Cache;
 use GDO\Core\GDO;
 use GDO\Country\GDT_Country;
 use GDO\DB\GDT_Decimal;
 use GDO\Country\GDO_Country;
 
+/**
+ * Table holds shapes of countries.
+ * Uses memcached for a full cache of the planet borders.
+ * 
+ * @author gizmore
+ * @version 6.10
+ * @since 6.06;
+ */
 final class GDO_CountryCoordinates extends GDO
 {
 	public function gdoCached() { return false; }
