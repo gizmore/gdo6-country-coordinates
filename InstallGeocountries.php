@@ -1,8 +1,15 @@
 <?php
 namespace GDO\CountryCoordinates;
+
 use GDO\Country\GDO_Country;
 use GDO\Core\GDOException;
 
+/**
+ * Installer of country geometry.
+ * @author gizmore
+ * @version 6.10
+ * @since 6.06
+ */
 final class InstallGeocountries
 {
 	public static function install()
@@ -61,4 +68,5 @@ final class InstallGeocountries
 			if ( ($maxLng === null) || ($lng > $maxLng) ) { $coordinates->setVar('cc_max_lng', $lng); }
 		}
 	}
+	
 }
