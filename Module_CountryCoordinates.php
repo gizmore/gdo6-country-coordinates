@@ -11,7 +11,7 @@ use GDO\Core\GDO_Module;
  */
 final class Module_CountryCoordinates extends GDO_Module
 {
-	public $module_priority = 100;
+	public $module_priority = 150;
 	
 	public function defaultEnabled() { return false; }
 	
