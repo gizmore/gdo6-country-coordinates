@@ -1,7 +1,6 @@
 <?php
 namespace GDO\CountryCoordinates;
 
-use GDO\DB\Cache;
 use GDO\Core\GDO;
 use GDO\Country\GDT_Country;
 use GDO\DB\GDT_Decimal;
@@ -17,17 +16,21 @@ use GDO\Country\GDO_Country;
  */
 final class GDO_CountryCoordinates extends GDO
 {
+    ###########
+    ### GDO ###
+    ###########
 	public function gdoCached() { return false; }
+	public function memCached() { return true; }
 	
 	public function gdoColumns()
 	{
-		return array(
+		return [
 			GDT_Country::make('cc_country')->primary(),
 			GDT_Decimal::make('cc_min_lat')->digits(3, 7),
 			GDT_Decimal::make('cc_min_lng')->digits(3, 7),
 			GDT_Decimal::make('cc_max_lat')->digits(3, 7),
 			GDT_Decimal::make('cc_max_lng')->digits(3, 7),
-		);
+		];
 	}
 	
 	/**
@@ -35,11 +38,18 @@ final class GDO_CountryCoordinates extends GDO
 	 */
 	public function getCountry() { return $this->getValue('cc_country'); }
 	public function getCountryID() { return $this->getVar('cc_country'); }
+	
 	public function getMinLat() { return $this->getVar('cc_min_lat'); }
 	public function getMinLng() { return $this->getVar('cc_min_lng'); }
 	public function getMaxLat() { return $this->getVar('cc_max_lat'); }
 	public function getMaxLng() { return $this->getVar('cc_max_lng'); }
 	
+	/**
+	 * Check if bounding rect contains coordinates.
+	 * @param double $lat
+	 * @param double $lng
+	 * @return boolean
+	 */
 	public function boxIncludes($lat, $lng)
 	{
 		return ($this->getMinLat() <= $lat) &&
@@ -48,32 +58,26 @@ final class GDO_CountryCoordinates extends GDO
 			($this->getMaxLng() >= $lng);
 	}
 	
+	/**
+	 * Get bounding box for a country.
+	 * @param string $id
+	 * @return self
+	 */
 	public static function getOrCreateById($id)
 	{
-		$cache = self::table()->all();
+		$cache = self::table()->allCached();
 		if (!isset($cache[$id]))
 		{
-			Cache::remove('gdo_country_coords');
-			return self::blank(array(
-				'cc_country' => $id,
-			))->insert();
+			return self::blank(['cc_country' => $id])->insert();
 		}
 		return $cache[$id];
 	}
 	
 	/**
-	 * @return self[]
+	 * Load the geometry to find exact country.
+	 * @param GDO_Country $country
+	 * @return object
 	 */
-	public function all()
-	{
-		if (false === ($cache = Cache::get('gdo_country_coords')))
-		{
-			$cache = self::table()->select('*')->exec()->fetchAllArray2dObject();
-			Cache::set('gdo_country_coords', $cache);
-		}
-		return $cache;
-	}
-	
 	public static function loadGeometry(GDO_Country $country)
 	{
 		$filename = Module_CountryCoordinates::instance()->filePath("data/{$country->getISO3()}.geo.json");
@@ -94,7 +98,7 @@ final class GDO_CountryCoordinates extends GDO
 	public static function probableCountries($lat, $lng)
 	{
 		$back = [];
-		foreach (self::table()->all() as $cc)
+		foreach (self::table()->allCached() as $cc)
 		{
 			if ($cc->boxIncludes($lat, $lng))
 			{
@@ -103,4 +107,5 @@ final class GDO_CountryCoordinates extends GDO
 		}
 		return $back;
 	}
+	
 }

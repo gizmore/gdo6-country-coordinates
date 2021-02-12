@@ -1,9 +1,11 @@
 <?php
 namespace GDO\CountryCoordinates\Method;
+
 use GDO\CountryCoordinates\GDO_CountryCoordinates;
 use GDO\Util\Common;
 use GDO\Country\GDO_Country;
 use GDO\Core\MethodAjax;
+
 /**
  * Detect a country by lat/lng geocoordinates.
  * Stolen from https://stackoverflow.com/a/2922778
@@ -84,6 +86,5 @@ final class Detect extends MethodAjax
 		}
 		return $result;
 	}
-		
 	
 }
