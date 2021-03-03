@@ -20,7 +20,7 @@ final class GDO_CountryCoordinates extends GDO
     ### GDO ###
     ###########
 	public function gdoCached() { return false; }
-	public function memCached() { return true; }
+	public function memCached() { return false; }
 	
 	public function gdoColumns()
 	{
