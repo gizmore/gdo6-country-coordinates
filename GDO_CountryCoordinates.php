@@ -80,7 +80,8 @@ final class GDO_CountryCoordinates extends GDO
 	 */
 	public static function loadGeometry(GDO_Country $country)
 	{
-		$filename = Module_CountryCoordinates::instance()->filePath("data/{$country->getISO3()}.geo.json");
+	    $iso3 = strtolower($country->getISO3());
+		$filename = Module_CountryCoordinates::instance()->filePath("data/{$iso3}.geo.json");
 		$content = file_get_contents($filename);
 		$object = json_decode($content);
 		$feature = $object->features[0];
