@@ -34,7 +34,7 @@ final class Detect extends MethodAjax
 		foreach ($probable as $country)
 		{
 			$geometry = GDO_CountryCoordinates::loadGeometry($country);
-			if ($this->insideGeometry($lat, $lng, $geometry))
+			if ($this->insideGeometry($geometry, $lat, $lng))
 			{
 				return $country;
 			}
@@ -42,7 +42,7 @@ final class Detect extends MethodAjax
 		return GDO_Country::unknownCountry();
 	}
 	
-	private function insideGeometry($lat=null, $lng=null, $geometry)
+	private function insideGeometry($geometry, $lat=null, $lng=null)
 	{
 		switch ($geometry->type)
 		{
@@ -51,7 +51,7 @@ final class Detect extends MethodAjax
 			case 'Polygon':
 				foreach ($geometry->coordinates as $coords)
 				{
-					if (self::insidePolygon($lat, $lng, $coords))
+				    if (self::insidePolygon($coords, $lat, $lng))
 					{
 						return true;
 					}
@@ -62,7 +62,7 @@ final class Detect extends MethodAjax
 				{
 					foreach ($polygon as $coords)
 					{
-						if (self::insidePolygon($lat, $lng, $coords))
+					    if (self::insidePolygon($coords, $lat, $lng))
 						{
 							return true;
 						}
@@ -73,7 +73,7 @@ final class Detect extends MethodAjax
 		return false;
 	}
 	
-	private function insidePolygon($lat=null, $lng=null, $coords)
+	private function insidePolygon($coords, $lat=null, $lng=null)
 	{
 	   $result = false;
 	   $nvert = count($coords);
